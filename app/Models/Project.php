@@ -21,11 +21,13 @@ class Project extends Model
         "link"
     ];
 
-    public function type() {
+    public function type()
+    {
         return $this->belongsTo(Type::class);
     }
 
-    public function technologies() {
+    public function technologies()
+    {
         return $this->belongsToMany(Technology::class);
     }
 }

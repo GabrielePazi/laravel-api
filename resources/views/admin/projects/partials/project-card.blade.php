@@ -1,4 +1,4 @@
-<div class="card" style="width: 30%">
+<div class="card" style="width: calc((100% / 3) - 0.67rem)">
     <img src="
         @if (str_contains(asset('/storage/' . $project->thumb), 'projects')) {{ asset('/storage/' . $project->thumb) }}   
         @else

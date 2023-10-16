@@ -74,7 +74,7 @@ class ProjectController extends Controller
         //search in the database the first element with the same slug as the input
         $project = Project::withTrashed()->where("slug", $slug)->first();
 
-        if($project['deleted_at']) {
+        if ($project['deleted_at']) {
             $project->restore();
 
             $projects = Project::all();
@@ -117,7 +117,7 @@ class ProjectController extends Controller
             //if a data has been unchecked it will be detached and viceversa
             $project->technologies()->sync($data['technologies']);
         }
-        
+
 
         //fill and save the data
         $project->update($data);
@@ -130,7 +130,7 @@ class ProjectController extends Controller
         //search in the database the first element with the same slug as the input
         $project = Project::withTrashed()->where("slug", $slug)->first();
 
-        if($project['deleted_at']) {
+        if ($project['deleted_at']) {
             $project->forceDelete();
 
             return redirect()->route("admin.projects.index");

@@ -74,14 +74,6 @@ class ProjectController extends Controller
         //search in the database the first element with the same slug as the input
         $project = Project::withTrashed()->where("slug", $slug)->first();
 
-        if ($project['deleted_at']) {
-            $project->restore();
-
-            $projects = Project::all();
-
-            return view("admin.projects.index", compact('projects'));
-        }
-
         //searches in the table of the types all the records
         $types = Type::all();
 
@@ -155,6 +147,19 @@ class ProjectController extends Controller
         $projects = Project::onlyTrashed()->get();
 
         return view("admin.projects.partials.deleted", compact("projects"));
+    }
+
+    public function restore(string $slug)
+    {
+        $project = Project::onlyTrashed()->where("slug", $slug)->first();
+
+        if ($project['deleted_at']) {
+            $project->restore();
+
+            $projects = Project::all();
+
+            return view("admin.projects.index", compact('projects'));
+        }
     }
 
     protected function generateSlug(string $title): string

@@ -1,8 +1,10 @@
 <div class="card" style="width: calc((100% / 3) - 0.67rem)">
     <img src="
-        @if (str_contains(asset('/storage/' . $project->thumb), 'projects')) {{ asset('/storage/' . $project->thumb) }}   
+        @if (str_contains(asset('/storage/' . $project->thumb), 'https')) 
+            {{ $project->thumb }} 
         @else
-            {{ $project->thumb }} @endif
+            {{ asset('/storage/' . $project->thumb) }} 
+        @endif
         "
         class="card-img-top" style="height: 150px; object-fit:cover" alt="...">
     <div class="card-body">
@@ -28,8 +30,12 @@
         {{-- actions --}}
         <a href="{{ route('admin.projects.show', $project->slug) }}" class="btn btn-primary w-100 my-2">Details</a>
         <div class="d-flex gap-1 w-100">
-            <a href="{{ route('admin.projects.edit', $project->slug) }}"
-                class="btn btn-warning w-50">{{ $project->deleted_at == null ? 'Modify' : 'Restore' }}</a>
+            @if ($project->deleted_at == null)
+                <a href="{{ route('admin.projects.edit', $project->slug) }}" class="btn btn-warning w-50">Modify</a>
+            @else
+                <a href="{{ route('admin.projects.restore', $project->slug) }}"
+                    class="btn btn-warning w-50">Restore</a>
+            @endif
 
             <form class="w-50" action="{{ route('admin.projects.destroy', $project->slug) }}" method="post">
                 @csrf

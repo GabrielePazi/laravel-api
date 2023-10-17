@@ -15,4 +15,12 @@ class ProjectController extends Controller
 
         return response()->json($projects);
     }
+
+    //riceve lo slug tramite querystring
+    public function show(string $slug)
+    {
+        $project = Project::where("slug", $slug)->first();
+
+        return response()->json($project);
+    }
 }
